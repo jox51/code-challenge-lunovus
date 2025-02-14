@@ -1,36 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js API TypeScript Code Challenge
 
-## Getting Started
+## Requirements
 
-First, run the development server:
+- **Node.js Version**: `>= 18.x`
+- **Package Manager**: `npm` (Recommended)
+- **Docker**: Required for containerization
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Environment Variables
+
+Create a `.env.local` file in the root directory and add the following variables:
+
+```env
+# API Keys
+GEMINI_API_KEY=<your_api_key>
+DEBUG=true
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run & Build Guide
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Install Dependencies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+npm install
+```
 
-## Learn More
+### Run the Development Server
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+npm dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Access the application at `http://localhost:3000`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Build for Production
 
-## Deploy on Vercel
+```sh
+npm build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Start Production Server
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+npm start
+```
+
+## Docker Setup
+
+To run the project in a Docker container, follow these steps:
+
+1. Build the Docker image:
+
+   ```sh
+   docker build -t code-challenge-lunovus .
+   ```
+
+2. Run the container:
+
+   ```sh
+   docker run -p 3000:3000 --env-file .env code-challenge-lunovus
+   ```
+
+3. Access the application at `http://localhost:3000`
+
+## Testing the Sales POST API
+
+### Endpoint:
+
+```
+POST api/sales/insights
+```
+
+### Request Payload (JSON):
+
+```json
+[
+  {
+    "name": "Alice Johnson",
+    "email": "alice.johnson1@example.com",
+    "product": "Widget A",
+    "category": "Widgets",
+    "amount": 120.5,
+    "date": "2023-03-01",
+    "state": "California"
+  }
+]
+```
+
+### Expected Response (JSON):
+
+```json
+{
+  "success": true,
+  "data": {
+    "analytics": {
+      "totalSales": 315.5,
+      "salesPerCategory": { "Widgets": 315.5 },
+      "bestPerformingCategory": "Widgets",
+      "salesPerProduct": { "Widget A": 315.5 },
+      "bestSellingProduct": "Widget A",
+      "salesPerState": { "California": 315.5 },
+      "uniqueCustomers": 3,
+      "averageSalesPerTransaction": 105.16666666666667,
+      "topCustomerBySpending": {
+        "email": "alice.johnson1@example.com",
+        "amount": 120.5
+      },
+      "salesTrendOverTime": {
+        "2023-03-01": 120.5,
+        "2023-03-02": 85,
+        "2023-03-03": 110
+      }
+    },
+    "summary": "**Sales Summary:**\n\nIn the observed period, our business generated a total revenue of $315.5, driven entirely by the sales of **Widgets**. This category emerged as the **best performer**, showcasing exceptional demand.\n\n**Product Performance:**\n\n**Widget A** was the **top-selling product**, accounting for 100% of the revenue. Its impressive sales ensure a consistent revenue stream for the company.\n\n**Customer Insights:**\n\nWith a total of 3 unique customers, we observed an **average sales per transaction of $105.17**. **Alice Johnson** emerged as our **top customer**, spending $120.5. Nurturing relationships with such valuable customers is crucial for sustained growth.\n\n**Sales Trends:**\n\nOur sales exhibited a promising trend over time:\n\n* March 1st: $120.5\n* March 2nd: $85\n* March 3rd: $110\n\nThis gradual increase signals a positive momentum and indicates potential for future growth.\n\n**Notable Insights:**\n\n* **Product Concentration:** The reliance on a single product category (Widgets) warrants consideration of product diversification to mitigate potential risks.\n* **Customer Base Expansion:** Acquiring new customers is essential for business growth. Implementing effective marketing strategies can help broaden our customer reach.\n* **Sales Momentum:** The steady increase in sales is a positive sign but requires sustained efforts to maintain and accelerate."
+  }
+}
+```
+
+### Testing with cURL:
+
+```sh
+curl --location 'http://localhost:3000/api/sales/insights' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+    {
+        "name": "Alice Johnson",
+        "email": "alice.johnson1@example.com",
+        "product": "Widget A",
+        "category": "Widgets",
+        "amount": 120.50,
+        "date": "2023-03-01",
+        "state": "California"
+    },
+    {
+        "name": "Bob Smith",
+        "email": "bob.smith2@example.com",
+        "product": "Widget A",
+        "category": "Widgets",
+        "amount": 85.00,
+        "date": "2023-03-02",
+        "state": "California"
+    },
+    {
+        "name": "Charlie Davis",
+        "email": "charlie.davis3@example.com",
+        "product": "Widget A",
+        "category": "Widgets",
+        "amount": 110.00,
+        "date": "2023-03-03",
+        "state": "California"
+    }
+]'
+```
+
+### Testing with Postman:
+
+1. Open Postman and select `POST` request.
+2. Enter `http://localhost:3000/api/sales/insights` as the URL.
+3. In the **Body** tab, select `raw` and choose `JSON`.
+4. Paste the request payload.
+5. Click **Send** to test the API.
+
