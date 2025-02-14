@@ -182,4 +182,4 @@ curl --location 'http://localhost:3000/api/sales/insights' \
 ![API Screenshot](./docs/screenshots/sales-insights-api.png)
 
 ## Support
-For any issues, please contact: [orlandodon37@gmail.com](mailto:orlandodon37@gmail.com)
+For any issues, please contact: [orlandodom37@gmail.com](mailto:orlandodom37@gmail.com)
