@@ -2,7 +2,7 @@ import { GenerativeModel, GoogleGenerativeAI } from "@google/generative-ai";
 import loggerService from "./logger.service";
 import ErrorMessages from "../constants/errors";
 
-export class GenerativeAIService {
+class GenerativeAIService {
     private _gpt: GoogleGenerativeAI;
     private _model: GenerativeModel;
     private readonly NO_RESPONSE = ErrorMessages.GENERIC_API_ERROR
@@ -15,7 +15,7 @@ export class GenerativeAIService {
     async getHumanReadableSummary(prompt: string) {
         try {
             const rawRes = await this._model.generateContent({ contents: [{ role: "user", parts: [{ text: prompt }] }] });
-            const summary = rawRes.response?.candidates?.at(0)?.content || this.NO_RESPONSE;
+            const summary = rawRes.response?.candidates?.at?.(0)?.content?.parts?.at?.(0)?.text || this.NO_RESPONSE;
             return summary
         } catch (err: unknown) {
             loggerService.info((err as Error)?.message || this.NO_RESPONSE)
