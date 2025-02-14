@@ -8,7 +8,7 @@
 
 ## Environment Variables
 
-Create a `.env.local` file in the root directory and add the following variables:
+Create a `.env` file in the root directory and add the following variables:
 
 ```env
 # API Keys
@@ -42,6 +42,24 @@ npm build
 
 ```sh
 npm start
+```
+
+## Folder Structure
+
+// The following structure organizes the project into logical modules for scalability.
+// Each folder serves a distinct purpose, making it easier to manage and extend the application.
+```
+/app
+├── api/          # Handles API routes and server-side logic
+├── constants/    # Stores application-wide constants and configurations
+├── services/     # Contains reusable business logic and API integrations
+├── types/        # Defines TypeScript types and interfaces
+├── Dockerfile
+├── package.json
+├── tsconfig.json
+├── next.config.js
+├── pages/
+└── public/
 ```
 
 ## Docker Setup
@@ -160,3 +178,8 @@ curl --location 'http://localhost:3000/api/sales/insights' \
 4. Paste the request payload.
 5. Click **Send** to test the API.
 
+## Screenshots
+![API Screenshot](./docs/screenshots/sales-insights-api.png)
+
+## Support
+For any issues, please contact: [orlandodon37@gmail.com](mailto:orlandodon37@gmail.com)

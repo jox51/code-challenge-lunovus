@@ -36,4 +36,4 @@ class LoggerService {
     }
 }
 
-export default LoggerService.getInstance(process.env.DEBUG);
+export default LoggerService.getInstance(Boolean(process.env.DEBUG));

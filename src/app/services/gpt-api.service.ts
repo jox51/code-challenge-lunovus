@@ -26,6 +26,6 @@ class GenerativeAIService {
 
 
 
-const generativeAI = new GenerativeAIService(process.env.GEMINI_API_KEY);
+const generativeAI = new GenerativeAIService(process.env.GEMINI_API_KEY || "");
 
 export default generativeAI;
